@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'page/home.dart';
 import 'page/transaksi.dart';
-import 'page/history.dart';
+import 'page/history.dart' as history_page;
 import 'page/statistik.dart';
+import 'page/profile.dart' as profile_page;
 
 void main() {
   runApp(const BudgetMateApp());
@@ -59,13 +60,16 @@ class _MainPageState extends State<MainPage> {
     final List<Widget> pages = [
       HomePage(transactions: transactions),
       AddTransactionPage(onAdd: _addTransaction),
-      HistoryPage(transactions: transactions),
+      history_page.HistoryPage(transactions: transactions),
       StatisticsPage(transactions: transactions),
-      const HomePage(),
+      const profile_page.ProfilePage(),
     ];
 
     return Scaffold(
-      body: pages[_selectedIndex],
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        child: pages[_selectedIndex],
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,
         onDestinationSelected: _onItemTapped,
@@ -79,6 +83,10 @@ class _MainPageState extends State<MainPage> {
           NavigationDestination(
             icon: Icon(Icons.bar_chart),
             label: "Statistik",
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person_outline),
+            label: "Profil",
           ),
         ],
       ),
