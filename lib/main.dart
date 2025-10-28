@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'page/home.dart';
 import 'page/transaksi.dart';
 import 'page/history.dart';
+import 'page/statistik.dart';
 
 void main() {
   runApp(const BudgetMateApp());
@@ -13,9 +14,13 @@ class BudgetMateApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Catatan Keuangan',
+      title: 'BudgetMate',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.teal),
+      theme: ThemeData(
+        colorSchemeSeed: Colors.teal,
+        useMaterial3: true,
+        brightness: Brightness.light,
+      ),
       home: const MainPage(),
     );
   }
@@ -55,21 +60,26 @@ class _MainPageState extends State<MainPage> {
       HomePage(transactions: transactions),
       AddTransactionPage(onAdd: _addTransaction),
       HistoryPage(transactions: transactions),
+      StatisticsPage(transactions: transactions),
+      const HomePage(),
     ];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('BudgetMate'), centerTitle: true),
       body: pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: _onItemTapped,
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.home_outlined), label: "Home"),
+          NavigationDestination(
+            icon: Icon(Icons.add_circle_outline),
             label: "Tambah",
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: "Riwayat"),
+          NavigationDestination(icon: Icon(Icons.history), label: "Riwayat"),
+          NavigationDestination(
+            icon: Icon(Icons.bar_chart),
+            label: "Statistik",
+          ),
         ],
       ),
     );

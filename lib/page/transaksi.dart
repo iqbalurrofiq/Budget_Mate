@@ -24,38 +24,63 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     _titleController.clear();
     _amountController.clear();
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Transaksi berhasil ditambahkan!")),
+      const SnackBar(content: Text("✅ Transaksi berhasil ditambahkan!")),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          TextField(
-            controller: _titleController,
-            decoration: const InputDecoration(labelText: "Judul Transaksi"),
-          ),
-          TextField(
-            controller: _amountController,
-            decoration: const InputDecoration(labelText: "Jumlah (Rp)"),
-            keyboardType: TextInputType.number,
-          ),
-          SwitchListTile(
-            title: const Text("Jenis Transaksi"),
-            subtitle: Text(_isIncome ? "Pemasukan" : "Pengeluaran"),
-            value: _isIncome,
-            onChanged: (val) => setState(() => _isIncome = val),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton.icon(
-            onPressed: _submit,
-            icon: const Icon(Icons.save),
-            label: const Text("Simpan Transaksi"),
-          ),
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Tambah Transaksi"),
+        backgroundColor: Colors.teal,
+        foregroundColor: Colors.white,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            TextField(
+              controller: _titleController,
+              decoration: const InputDecoration(
+                labelText: "Judul Transaksi",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _amountController,
+              decoration: const InputDecoration(
+                labelText: "Jumlah (Rp)",
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(height: 16),
+            SwitchListTile(
+              title: const Text("Jenis Transaksi"),
+              subtitle: Text(_isIncome ? "Pemasukan" : "Pengeluaran"),
+              value: _isIncome,
+              onChanged: (val) => setState(() => _isIncome = val),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
+              onPressed: _submit,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 14,
+                  horizontal: 24,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              icon: const Icon(Icons.save),
+              label: const Text("Simpan", style: TextStyle(fontSize: 16)),
+            ),
+          ],
+        ),
       ),
     );
   }
